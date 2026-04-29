@@ -1,30 +1,26 @@
-import { test, expect } from '@playwright/test';
-import { LoginPage } from '../../pages/LoginPage';
-
+import {expect } from '@playwright/test';
+import { test } from '../../fixtures/auth.fixture';
 
 test.describe('Login Tests', () => {
 
-    test('Valid login', async ({ page }) => {
-        const loginPage = new LoginPage(page);
-        await loginPage.goto();
-        await loginPage.isLoaded();
+    test('Valid login', async ({ loggedInPage }) => {
+         await loggedInPage.goto();
+        await loggedInPage.isLoaded();
         // await expect(page).toHaveURL('https://tutorialsninja.com/demo/index.php?route=account/login');
-              await loginPage.login('testGandhi@gmail.com', 'P@ssw0rd1234');
-        await expect(page).toHaveTitle('My Account');
+              await loggedInPage.login('testGandhi@gmail.com', 'P@ssw0rd1234');
+        await expect(loggedInPage.page).toHaveTitle('My Account');
                    //  await page.pause();
-    await expect(page).toHaveURL('https://tutorialsninja.com/demo/index.php?route=account/account')
+    await expect(loggedInPage.page).toHaveURL('https://tutorialsninja.com/demo/index.php?route=account/account')
     });
 
-    test('Invalid login', async ({ page }) => {
-         const loginPage = new LoginPage(page);
-        await loginPage.goto();
-        await loginPage.isLoaded();
+    test('Invalid login', async ({ loggedInPage }) => {
+          await loggedInPage.goto();
+        await loggedInPage.isLoaded();
         // await expect(page).toHaveURL('https://tutorialsninja.com/demo/index.php?route=account/login');
-              await loginPage.login('testGandhi123@gmail.com', 'P@ssw0rd1234');
-         const errorMsg = page.locator('.alert.alert-danger');
+              await loggedInPage.login('testGandhi123@gmail.com', 'P@ssw0rd1234');
+         const errorMsg = loggedInPage.page.locator('.alert.alert-danger');
 await expect(errorMsg).toBeVisible();
 await expect(errorMsg).toContainText('No match for E-Mail Address');
         
-
     });
     });

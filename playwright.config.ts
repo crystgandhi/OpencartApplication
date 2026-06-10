@@ -10,6 +10,7 @@ import { defineConfig, devices } from '@playwright/test';
 
 export default defineConfig({
   testDir: './tests',
+  globalSetup: './global.setup.ts',
     timeout: 60_000,
   expect: {
     timeout: 10_000,
@@ -39,6 +40,7 @@ export default defineConfig({
     },
      actionTimeout: 15_000,
      navigationTimeout: 30_000,
+     storageState: 'auth.json',
 },
 
   /* Configure projects for major browsers */
